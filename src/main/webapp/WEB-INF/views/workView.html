@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>employees/time</title>
+    <style type="text/css">
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+    </style>
+</head>
+
+<body>
+
+<!--/*@thymesVar id="records" type="java.util.List"*/-->
+<!--/*@thymesVar id="record" type="org.ipps.models.Table_time"*/-->
+<!--/*@thymesVar id="date_start" type="java.util.Date"*/-->
+<!--/*@thymesVar id="date_end" type="java.util.Date"*/-->
+
+<div class="row">
+    <form method="post" action="/empl_time">
+        <input type="date" name="date_start" id="date_start" onchange="form.submit()" th:value="${date_start}">
+        <input type="date" name="date_end" id="date_end" onchange="form.submit()" th:value="${date_end}">
+        <input type="text" id="surnameorname" name="surnameorname" onchange="form.submit()" th:value="${surnameorname}"
+               placeholder="Поиск...">
+    </form>
+</div>
+
+<table id="myTable" width="90%" border="1">
+    <tr>
+        <th>Person_surname</th>
+        <th>Person_fname</th>
+        <th>Person_lname</th>
+        <th>Data</th>
+        <th>Min</th>
+        <th>Max</th>
+    </tr>
+
+    <tr th:each="record : ${records}">
+        <th th:utext="${record.getEmployee_id().getPerson_surname()}"></th>
+        <th th:utext="${record.getEmployee_id().getPerson_fname()}"></th>
+        <th th:utext="${record.getEmployee_id().getPerson_lname()}"></th>
+        <th th:utext="${record.getDate_entr()}"></th>
+        <th th:utext="${record.getMin_time()}"></th>
+        <th th:utext="${record.getMax_time()}"></th>
+    </tr>
+</table>
+</body>
+</html>
