@@ -30,10 +30,19 @@ public class EmployeeTimeDAOimpl implements EmployeeTimeDAOInterface {
                     .setParameter("date_start", date_start).setParameter("date_end", date_end).list();
         } else {
             List<String> search = Arrays.asList(surnameorname.split(" "));
-            table_times = (ArrayList<Table_time>) HibernateSessionFactoryUtil.getSessionFactory().openSession().createQuery("" +
-                            "from Table_time Where date_entr >= :date_start and date_entr <= :date_end " +
-                            "and (employee_id.person_fname in (:surnameorname) or employee_id.person_surname in (:surnameorname))")
-                    .setParameter("date_start", date_start).setParameter("date_end", date_end).setParameterList("surnameorname", search).list();
+//            Проверяет сколько слов было введено через пробел (если только одно, то ищет просто в колонках имени и фамилии по введенному слову)
+//            Если ввдены и имя и фамилия, то НЕ выведет однофамильцев, а определенного человека, не зависимо было введено первымм имя или фамилия
+            if (search.size()>1){
+                table_times = (ArrayList<Table_time>) HibernateSessionFactoryUtil.getSessionFactory().openSession().createQuery("" +
+                                "from Table_time Where date_entr >= :date_start and date_entr <= :date_end " +
+                                "and (employee_id.person_fname in (:surnameorname) and employee_id.person_surname in (:surnameorname))")
+                        .setParameter("date_start", date_start).setParameter("date_end", date_end).setParameterList("surnameorname", search).list();
+            }else{
+                table_times = (ArrayList<Table_time>) HibernateSessionFactoryUtil.getSessionFactory().openSession().createQuery("" +
+                                "from Table_time Where date_entr >= :date_start and date_entr <= :date_end " +
+                                "and (employee_id.person_fname in (:surnameorname) or employee_id.person_surname in (:surnameorname))")
+                        .setParameter("date_start", date_start).setParameter("date_end", date_end).setParameterList("surnameorname", search).list();
+            }
         }
         return table_times;
     }

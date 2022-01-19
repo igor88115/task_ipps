@@ -34,7 +34,6 @@ public class MainControler {
         }else{
             date_start = records.get(records.size() - 1).getDate_entr();
         }
-        records =  employeeTimeService.findAll();
         model.addAttribute("records", records);
         model.addAttribute("date_start", date_start);
         model.addAttribute("date_end", date);
