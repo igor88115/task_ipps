@@ -1,6 +1,7 @@
 package org.ipps.services;
 
 import org.ipps.dao.EmployeeTimeDAOimpl;
+import org.ipps.models.Table_employees;
 import org.ipps.models.Table_time;
 import org.springframework.stereotype.Service;
 
@@ -21,4 +22,19 @@ public class EmployeeTimeService {
 
         return employeeTimeDAOimpl.findByConstraint(date_start, date_end, surnameorname);
     }
+
+    public ArrayList<Table_time> findRecordsByLogin(String login) {
+
+        return employeeTimeDAOimpl.findRecordsByLogin(login);
+    }
+
+    public Table_employees finByLogin(String login) {
+        return employeeTimeDAOimpl.findByLogin(login);
+    }
+
+    public ArrayList<Table_time> findRecordsByLoginAndConstraintDate(Date date_start, Date date_end, String login) {
+
+        return employeeTimeDAOimpl.findRecordsByloginAndConstraint(date_start, date_end, login);
+    }
+
 }

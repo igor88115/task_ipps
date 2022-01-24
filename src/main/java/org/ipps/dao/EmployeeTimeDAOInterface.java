@@ -7,10 +7,11 @@ import java.sql.Date;
 import java.util.ArrayList;
 
 public interface EmployeeTimeDAOInterface {
-    //  Нигде не используется, но может пригодится
-    public ArrayList<Table_employees> findAll();
 
-    ArrayList<Table_time> findAllRecords();
+    public Table_employees findByLogin(String login);
+    public ArrayList<Table_time> findRecordsByLogin(String login);
+    public ArrayList<Table_time> findRecordsByloginAndConstraint(Date date_start, Date date_end, String login);
 
+    public ArrayList<Table_time> findAllRecords();
     public ArrayList<Table_time> findByConstraint(Date date_start, Date date_end, String surnameorname);
 }

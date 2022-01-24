@@ -1,9 +1,7 @@
 package org.ipps.config;
 
-import org.ipps.config.SpringConfig;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-// ПОЛНОСТЬЮ ЗАМЕНЯЕТ Web.xml !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 public class DispatcherServletInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
     @Override

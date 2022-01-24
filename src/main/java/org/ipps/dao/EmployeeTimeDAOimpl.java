@@ -8,10 +8,11 @@ import java.util.Arrays;
 import java.util.List;
 
 public class EmployeeTimeDAOimpl implements EmployeeTimeDAOInterface {
-//  Нигде не используется, но может пригодится
+//    Поиск через логин
     @Override
-    public ArrayList<Table_employees> findAll() {
-        ArrayList<Table_employees> table_employees = (ArrayList<Table_employees>) HibernateSessionFactoryUtil.getSessionFactory().openSession().createQuery("from Table_employees").list();
+    public Table_employees findByLogin(String login) {
+        ArrayList<Table_employees> list_table_employees = (ArrayList<Table_employees>) HibernateSessionFactoryUtil.getSessionFactory().openSession().createQuery("from Table_employees where login = :login").setParameter("login", login).list();
+        Table_employees table_employees = list_table_employees.get(0);
         return table_employees;
     }
 // Вытаскиает все записи
@@ -45,5 +46,22 @@ public class EmployeeTimeDAOimpl implements EmployeeTimeDAOInterface {
             }
         }
         return table_times;
+    }
+
+
+    @Override
+    public ArrayList<Table_time> findRecordsByLogin(String login) {
+        ArrayList<Table_time> list_table_time = (ArrayList<Table_time>) HibernateSessionFactoryUtil.getSessionFactory().openSession().createQuery(
+                "from Table_time where employee_id.login = :login order by date_entr desc").setParameter("login", login).list();
+        return list_table_time;
+    }
+
+    @Override
+    public ArrayList<Table_time> findRecordsByloginAndConstraint(Date date_start, Date date_end, String login) {
+        ArrayList<Table_time> list_table_time = (ArrayList<Table_time>) HibernateSessionFactoryUtil.getSessionFactory().openSession().createQuery("" +
+                        "from Table_time Where date_entr >= :date_start and date_entr <= :date_end " +
+                        "and employee_id.login like :login")
+                        .setParameter("date_start", date_start).setParameter("date_end", date_end).setParameter("login", login).list();
+        return list_table_time;
     }
 }

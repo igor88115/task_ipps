@@ -14,12 +14,41 @@ public class Table_employees {
     private String person_surname;
     private String person_fname;
     private String person_lname;
+    private String login;
+    private String password;
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "role")
+    private Role role;
 
     @OneToMany(mappedBy = "employee_id", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Table_time> table_timeList;
 
 
     public Table_employees() {
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public int getId() {
